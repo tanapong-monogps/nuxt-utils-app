@@ -6,7 +6,7 @@ interface State {
   response: any;
 }
 import type { FetchContext, FetchResponse, ResponseType } from "ofetch";
-export const useApiGlobleConfig = defineStore("useApiGlobleConfig", () => {
+export const useApiGlobalConfig = defineStore("useApiGlobalConfig", () => {
   const state = reactive<State>({
     baseUrl: "",
     onResponse: false,

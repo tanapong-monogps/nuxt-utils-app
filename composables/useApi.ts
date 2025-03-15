@@ -18,7 +18,7 @@ export function useApi<T>(
   const fetch = options?.lazy ? useLazyFetch : useFetch;
   const config = useRuntimeConfig();
   const { getBaseUrl, setResponse, setErrorResponse, state } =
-    useApiGlobleConfig();
+    useApiGlobalConfig();
   const accessToken = useCookie("access_token");
   const isLoading =
     options?.handleLoading !== undefined ? options.handleLoading : true;

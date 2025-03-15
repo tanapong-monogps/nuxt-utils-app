@@ -5,7 +5,7 @@
   </div>
 </template>
 <script setup lang="ts">
-const { setBaseUrl, onResponse, onResponseError } = useApiGlobleConfig();
+const { setBaseUrl, onResponse, onResponseError } = useApiGlobalConfig();
 setBaseUrl("https://fakestoreapi.com");
 onResponse((res) => {
   console.log(res);
