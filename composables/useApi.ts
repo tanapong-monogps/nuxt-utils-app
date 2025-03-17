@@ -29,8 +29,13 @@ export function useApi<T>(
       req.options.headers = {
         ...req.options.headers,
         Accept: "application/json",
-        Authorization: `Bearer ${accessToken.value}`,
       } as any;
+      state.headers.forEach((header) => {
+        req.options.headers = {
+          ...req.options.headers,
+          ...{ [header.key]: header.value },
+        };
+      });
     },
     onResponse: (
       res: FetchContext<any, ResponseType> & { response: FetchResponse<any> }

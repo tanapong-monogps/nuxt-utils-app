@@ -5,13 +5,9 @@
   </div>
 </template>
 <script setup lang="ts">
-const { setBaseUrl, onResponse, onResponseError } = useApiGlobalConfig();
+const { setBaseUrl, onResponse, onResponseError, headers } =
+  useApiGlobalConfig();
 setBaseUrl("https://fakestoreapi.com");
-onResponse((res) => {
-  console.log(res);
-});
-onResponseError((error) => {
-  console.log(error.response);
-});
-await useApi("/products");
+headers().add("Authorization", "Bearer token");
+headers().add("x-auth", "test auth");
 </script>

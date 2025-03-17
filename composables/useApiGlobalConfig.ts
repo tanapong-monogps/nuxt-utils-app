@@ -1,10 +1,16 @@
+interface Header {
+  key: string;
+  value: string;
+}
 interface State {
   baseUrl: string;
   onResponse: boolean;
   onResponseError: boolean;
   responseError: any;
   response: any;
+  headers: Header[];
 }
+
 import type { FetchContext, FetchResponse, ResponseType } from "ofetch";
 export const useApiGlobalConfig = defineStore("useApiGlobalConfig", () => {
   const state = reactive<State>({
@@ -13,9 +19,26 @@ export const useApiGlobalConfig = defineStore("useApiGlobalConfig", () => {
     response: null,
     onResponseError: false,
     responseError: null,
+    headers: [],
   });
   function setBaseUrl(url: string) {
     state.baseUrl = url;
+  }
+  function headers() {
+    function add(key: string, value: string) {
+      state.headers.push({ key, value });
+    }
+    function remove(key: string) {
+      state.headers = state.headers.filter((header) => header.key !== key);
+    }
+    function get() {
+      return state.headers;
+    }
+    return {
+      add,
+      remove,
+      get,
+    };
   }
   function setResponse(
     response: FetchContext<any, ResponseType> & { response: FetchResponse<any> }
@@ -39,7 +62,6 @@ export const useApiGlobalConfig = defineStore("useApiGlobalConfig", () => {
       (newVal) => {
         if (newVal) {
           callback(state.responseError);
-          console.log("onResponseError", newVal);
         }
       }
     );
@@ -56,7 +78,6 @@ export const useApiGlobalConfig = defineStore("useApiGlobalConfig", () => {
       (newVal) => {
         if (newVal) {
           callback(state.response);
-          console.log("onResponse", newVal);
         }
       }
     );
@@ -72,5 +93,6 @@ export const useApiGlobalConfig = defineStore("useApiGlobalConfig", () => {
     getBaseUrl,
     onResponseError,
     setErrorResponse,
+    headers,
   };
 });
